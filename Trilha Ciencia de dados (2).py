@@ -4,7 +4,7 @@ from scipy.stats import linregress
 
 
 # Carregar o arquivo CSV
-nome_arquivo = 'C:/Users/PC/Desktop/Arquivos/vendas_cursos.csv'
+nome_arquivo = 'C:/Users/PC/Desktop/arquivos/vendas_cursos.csv'
 dados = pd.read_csv(nome_arquivo, encoding='latin1')
 
 # Ajustar o tipo de dado para 'Quantidade de Vendas' se necessário
@@ -81,6 +81,8 @@ plt.gca().xaxis.set_major_formatter(plt.FormatStrFormatter('%.1f'))  # Formato c
 # Adicionar legenda
 legend_colors = {'Maior Faturamento': '#FFD700', 'Mais Vendas': '#32CD32'}
 legend_handles = [plt.Rectangle((0,0), 1, 1, color=color) for color in legend_colors.values()]
+receita_total_text = f'Receita Total: {formata_receita(receita_total)}'
+plt.text(0.98, 0.20, receita_total_text, ha='right', va='bottom', transform=plt.gca().transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
 plt.legend(legend_handles, legend_colors.keys())
 plt.tight_layout()
 plt.show()
