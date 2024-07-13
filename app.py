@@ -2,13 +2,26 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
+import requests
+from io import StringIO
 
 # Título da aplicação
 st.title('Análise de Vendas de Cursos')
 
-# Carregar o arquivo CSV
-nome_arquivo = 'C:/Users/PC/Desktop/arquivos/vendas_cursos.csv'
-dados = pd.read_csv(nome_arquivo, encoding='latin1')
+# URL do arquivo CSV no GitHub
+url = 'https://github.com/lukegoes/TrilhaDadosJR-JUN15/raw/main/vendas_cursos.csv'
+
+# Carregar o arquivo CSV a partir do GitHub
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # Verifica se houve erro no request
+    dados = pd.read_csv(StringIO(response.text), encoding='latin1')
+    
+    # Aqui você pode usar 'dados' para visualização ou análise
+    st.write(dados)
+    
+except requests.exceptions.RequestException as e:
+    st.error(f"Erro ao carregar arquivo: {e}")
 
 # Ajustar o tipo de dado para 'Quantidade de Vendas' se necessário
 dados['Quantidade de Vendas'] = dados['Quantidade de Vendas'].astype('int64')
